@@ -1,0 +1,42 @@
+﻿@model IEnumerable<WebsiteTN.Models.Role>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="table-responsive">
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">NameRole</th>
+                <th scope="col">Description</th>
+                <th scope="col">Function</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model != null)
+            {
+                foreach(var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.RoleId</th>
+                        <td>@item.RoleName</td>
+                        <td>@item.Description</td>
+                        <td>
+                            <a class="btn btn-primary btn-tone m-r-5" asp-area="Admin" asp-action="Details" asp-controller="AdminRoles" asp-route-id="@item.RoleId">View</a>
+                            <a class="btn btn-secondary btn-tone m-r-5" asp-area="Admin" asp-action="Edit" asp-controller="AdminRoles"asp-route-id="@item.RoleId">Edit</a>
+                            <a class="btn btn-success btn-tone m-r-5" asp-area="Admin" asp-action="Delete" asp-controller="AdminRoles"asp-route-id="@item.RoleId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
