@@ -10,7 +10,7 @@ using WebsiteTN.Models;
 namespace WebsiteTN.Migrations
 {
     [DbContext(typeof(DataDbContext))]
-    [Migration("20221214081855_v1")]
+    [Migration("20221215073034_v1")]
     partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -489,7 +489,7 @@ namespace WebsiteTN.Migrations
                     b.Property<bool>("BestSellers")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("CatId")
+                    b.Property<int?>("CategoryId")
                         .IsRequired()
                         .HasColumnType("int");
 
@@ -541,7 +541,7 @@ namespace WebsiteTN.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("CatId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
                 });
@@ -664,13 +664,13 @@ namespace WebsiteTN.Migrations
 
             modelBuilder.Entity("WebsiteTN.Models.Product", b =>
                 {
-                    b.HasOne("WebsiteTN.Models.Category", "Cat")
+                    b.HasOne("WebsiteTN.Models.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CatId")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cat");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("WebsiteTN.Models.Attribute", b =>

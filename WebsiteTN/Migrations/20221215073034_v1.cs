@@ -211,7 +211,7 @@ namespace WebsiteTN.Migrations
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ShortDesc = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CatId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: true),
                     Discount = table.Column<int>(type: "int", nullable: true),
                     Thumb = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -232,8 +232,8 @@ namespace WebsiteTN.Migrations
                 {
                     table.PrimaryKey("PK_Products", x => x.ProductId);
                     table.ForeignKey(
-                        name: "FK_Products_Categories_CatId",
-                        column: x => x.CatId,
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "CategoryId",
                         onDelete: ReferentialAction.Cascade);
@@ -400,9 +400,9 @@ namespace WebsiteTN.Migrations
                 column: "TransactStatusId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_CatId",
+                name: "IX_Products_CategoryId",
                 table: "Products",
-                column: "CatId");
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

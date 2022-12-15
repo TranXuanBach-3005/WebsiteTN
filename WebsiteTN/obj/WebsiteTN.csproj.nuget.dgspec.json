@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\XuanBach\\WebsiteTN\\WebsiteTN\\WebsiteTN.csproj": {}
+    "D:\\WebsiteTN\\WebsiteTN\\WebsiteTN.csproj": {}
   },
   "projects": {
-    "D:\\XuanBach\\WebsiteTN\\WebsiteTN\\WebsiteTN.csproj": {
+    "D:\\WebsiteTN\\WebsiteTN\\WebsiteTN.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\XuanBach\\WebsiteTN\\WebsiteTN\\WebsiteTN.csproj",
+        "projectUniqueName": "D:\\WebsiteTN\\WebsiteTN\\WebsiteTN.csproj",
         "projectName": "WebsiteTN",
-        "projectPath": "D:\\XuanBach\\WebsiteTN\\WebsiteTN\\WebsiteTN.csproj",
+        "projectPath": "D:\\WebsiteTN\\WebsiteTN\\WebsiteTN.csproj",
         "packagesPath": "C:\\Users\\SaoThuy\\.nuget\\packages\\",
-        "outputPath": "D:\\XuanBach\\WebsiteTN\\WebsiteTN\\obj\\",
+        "outputPath": "D:\\WebsiteTN\\WebsiteTN\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\SaoThuy\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -23,7 +23,7 @@ namespace WebsiteTN.Controllers
         }
         public IActionResult Details(int id)
         {
-            var product = _dbContext.Products.Include(x => x.CatId).FirstOrDefault(x => x.ProductId == id);
+            var product = _dbContext.Products.Include(x => x.Category).FirstOrDefault(x => x.ProductId == id);
             if(product == null)
             {
                 return RedirectToAction("Index");
