@@ -19,7 +19,7 @@ namespace WebsiteTN.Models
         public string ShortDesc { get; set; }
         public string Description { get; set; }
         [Required(ErrorMessage ="Phải nhập danh mục sản phẩm")]
-        public int? CatId { get; set; }
+        public int? CategoryId { get; set; }
         public int? Price { get; set; }
         public int? Discount { get; set; }
         public string Thumb { get; set; }
@@ -37,7 +37,7 @@ namespace WebsiteTN.Models
         [Required(ErrorMessage =("Phải nhập số lượng"))]
         public int? UnitsInStock { get; set; }
 
-        public virtual Category Cat { get; set; }
+        public virtual Category Category { get; set; }
         public virtual ICollection<AttributesPrice> AttributesPrices { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
