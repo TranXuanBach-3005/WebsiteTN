@@ -1,0 +1,100 @@
+﻿@model IEnumerable<WebsiteTN.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Trang chủ</a>
+            <span class="breadcrumb-item active">Danh sách tài khoản</span>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body pb-0">
+        <div class="row m-b-30">
+            <div class="col-md-8">
+                 <div class="row">
+                     <div class="input-affix m-v-10">
+                         <i class="prefix-icon antion antincon-search opacity-04"></i>
+                         <input id="keyword" name="keyword" type="text" class="form-control" />
+                     </div>
+                 </div>
+                 <div class="col-md-6">
+                     <div class="input-affix m-v-10">
+                         <select class="custom-select" id="txtCatID" name="txtCatID" style="min-width:200px" asp-items="ViewBag.DanhMuc">
+                             <option selected>Chon danh muc</option>
+                             <option value="0">Chon tat ca</option>
+                         </select>
+                     </div>
+                 </div>
+            </div>
+            <div class="col-lg-4 text-right">
+                <a class="btn btn-primary" asp-area="Admin" asp-action="Create" asp-controller="AdminProducts">Tao moi san pham</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover e-commerce-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ten san pham</th>
+                <th>Danh muc</th>
+                <th>Gia</th>
+                <th>Ton kho</th>
+                <th>Trang thai</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="records_table">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                            <tr>
+
+                                <td>
+                            @item.ProductId
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img class="img-fluid rounded" src="assets/images/others/thumb-9.jpg" style="max-width: 60px" alt="">
+                                        <h6 class="m-b-0 m-l-10">@item.ProductName</h6>
+                                    </div>
+                                </td>
+                                <td>@item.Category.CatName</td>
+                                <td>@item.Price.Value.ToString("#,##0") VNĐ</td>
+                                <td>@item.UnitsInStock</td>
+                                <td>
+                            @if (item.UnitsInStock.Value > 0)
+                            {
+                                <div class="d-flex align-items-center">
+                                    <div class="badge badge-success badge-dot m-r-10"></div>
+                                    <div>Còn hàng</div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-flex align-items-center">
+                                    <div class="badge badge-success badge-dot m-r-10"></div>
+                                    <div>Hết hàng</div>
+                                </div>
+                            }
+
+                                <td>
+                                    <a class="btn btn-primary btn-tone m-r-5" asp-area="Admin" asp-controller="AdminProducts" asp-action="Details" asp-route-id="@item.ProductId">Chi tiết</a>
+                                    <a class="btn btn-secondary btn-tone m-r-5" asp-area="Admin" asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@item.ProductId">Sửa</a>
+                                    <a class="btn btn-success btn-tone m-r-5" asp-area="Admin" asp-controller="AdminProducts" asp-action="Delete" asp-route-id="@item.ProductId">Xóa</a>
+
+                                </td>
+                            </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

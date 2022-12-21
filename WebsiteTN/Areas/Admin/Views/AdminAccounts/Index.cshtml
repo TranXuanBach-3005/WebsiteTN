@@ -14,9 +14,23 @@
     </div>
 </div>
 <div class="card">
-    <div class="card-body">
-        <div class="row m-b-3">
+    <div class="card-body pb-0">
+        <div class="row m-b-30 ">
             <div class="col-lg-8">
+                <div class="d-md-flex">
+                    <div class="m-b-10 m-r-15">
+                    <select class="custom-select" id="idrole" name="idrole" style="min-width:200px;" asp-items="ViewBag.QuyenTruyCap">
+                        <option value="0" disabled selected>Chọn quyền truy cập</option>
+                    </select>
+                </div>
+                <div class="m-b-10">
+                    <select class="custom-select" id="idStatus" name="idStatus" style="min-width:200px;" asp-items="ViewBag.lsTrangThai">
+                        <option value="0" disabled selected>Chọn trạng thái</option>
+                    </select>
+                </div>
+                </div>
+            </div>
+             <div class="col-lg-4 text-right">
                 <a class="btn btn-primary" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Create"><i class="anticon anticon-plus-circle m-r-5"></i>Tạo tài khoản mới</a>
             </div>
         </div>
