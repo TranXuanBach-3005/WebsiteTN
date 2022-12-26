@@ -15,29 +15,28 @@ using WebsiteTN.Models;
 namespace WebsiteTN.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class AdminPostsController : Controller
+    public class AdminPagesController : Controller
     {
         private readonly DataDbContext _context;
         private readonly INotyfService _notyfService;
-
-        public AdminPostsController(DataDbContext context, INotyfService notyfService)
+        public AdminPagesController(DataDbContext context, INotyfService notyfService)
         {
             _context = context;
             _notyfService = notyfService;
         }
 
-        // GET: Admin/AdminPosts
+        // GET: Admin/AdminPages
         public async Task<IActionResult> Index(int? page)
         {
-            var listPosts = _context.Posts.AsNoTracking().OrderBy(x=>x.PostId);
+            var listPages = _context.Pages.AsNoTracking().OrderBy(x => x.PageId);
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 20;
-            PagedList<Post> models = new PagedList<Post>(listPosts, pageNumber, pageSize);
+            PagedList<Page> models = new PagedList<Page>(listPages, pageNumber, pageSize);
             ViewBag.CurrentPage = pageNumber;
             return View(models);
         }
 
-        // GET: Admin/AdminPosts/Details/5
+        // GET: Admin/AdminPages/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,49 +44,49 @@ namespace WebsiteTN.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts
-                .FirstOrDefaultAsync(m => m.PostId == id);
-            if (post == null)
+            var page = await _context.Pages
+                .FirstOrDefaultAsync(m => m.PageId == id);
+            if (page == null)
             {
                 return NotFound();
             }
 
-            return View(post);
+            return View(page);
         }
 
-        // GET: Admin/AdminPosts/Create
+        // GET: Admin/AdminPages/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/AdminPosts/Create
+        // POST: Admin/AdminPages/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostId,Title,Scontents,Contents,Thumb,Published,Alias,CreatedDate,Author,AccountId,Tags,CatId,IsHot,IsNewfeed,MetaKey,MetaDesc,Views")] Post post, IFormFile fThumb)
+        public async Task<IActionResult> Create([Bind("PageId,PageName,Contents,Thumb,Published,Title,MetaDesc,MetaKey,Alias,CreatedDate,Ordering")] Page page, IFormFile fThumb)
         {
             if (ModelState.IsValid)
             {
-                if(fThumb != null)
+
+                if (fThumb != null)
                 {
                     string extension = Path.GetExtension(fThumb.FileName);
-                    string imageName = Utilities.SEOUrl(post.Title) + extension;
-                    post.Thumb = await Utilities.UploadFile(fThumb, @"post", imageName.ToLower());
+                    string imageName = Utilities.SEOUrl(page.PageName) + extension;
+                    page.Thumb = await Utilities.UploadFile(fThumb, @"page", imageName.ToLower());
                 }
-                if(string.IsNullOrEmpty(post.Thumb)) post.Thumb = "default.jpg";
-                post.Alias = Utilities.SEOUrl(post.Title);
-                post.CreatedDate = DateTime.Now;
-                _context.Add(post);
+                if (string.IsNullOrEmpty(page.Thumb)) page.Thumb = "default.jpg";
+                page.Alias = Utilities.SEOUrl(page.PageName);
+                _context.Add(page);
                 await _context.SaveChangesAsync();
-                _notyfService.Success("Tạo mới thành công");
+                _notyfService.Success("Thêm mới thành công");
                 return RedirectToAction(nameof(Index));
             }
-            return View(post);
+            return View(page);
         }
 
-        // GET: Admin/AdminPosts/Edit/5
+        // GET: Admin/AdminPages/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,22 +94,22 @@ namespace WebsiteTN.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts.FindAsync(id);
-            if (post == null)
+            var page = await _context.Pages.FindAsync(id);
+            if (page == null)
             {
                 return NotFound();
             }
-            return View(post);
+            return View(page);
         }
 
-        // POST: Admin/AdminPosts/Edit/5
+        // POST: Admin/AdminPages/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PostId,Title,Scontents,Contents,Thumb,Published,Alias,CreatedDate,Author,AccountId,Tags,CatId,IsHot,IsNewfeed,MetaKey,MetaDesc,Views")] Post post, IFormFile fThumb)
+        public async Task<IActionResult> Edit(int id, [Bind("PageId,PageName,Contents,Thumb,Published,Title,MetaDesc,MetaKey,Alias,CreatedDate,Ordering")] Page page, IFormFile fThumb)
         {
-            if (id != post.PostId)
+            if (id != page.PageId)
             {
                 return NotFound();
             }
@@ -122,18 +121,18 @@ namespace WebsiteTN.Areas.Admin.Controllers
                     if (fThumb != null)
                     {
                         string extension = Path.GetExtension(fThumb.FileName);
-                        string imageName = Utilities.SEOUrl(post.Title) + extension;
-                        post.Thumb = await Utilities.UploadFile(fThumb, @"post", imageName.ToLower());
+                        string imageName = Utilities.SEOUrl(page.PageName) + extension;
+                        page.Thumb = await Utilities.UploadFile(fThumb, @"page", imageName.ToLower());
                     }
-                    if (string.IsNullOrEmpty(post.Thumb)) post.Thumb = "default.jpg";
-                    post.Alias = Utilities.SEOUrl(post.Title);
-                    _context.Update(post);
+                    if (string.IsNullOrEmpty(page.Thumb)) page.Thumb = "default.jpg";
+                    page.Alias = Utilities.SEOUrl(page.PageName);
+                    _context.Update(page);
                     await _context.SaveChangesAsync();
                     _notyfService.Success("Cập nhật thành công");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PostExists(post.PostId))
+                    if (!PageExists(page.PageId))
                     {
                         return NotFound();
                     }
@@ -144,10 +143,10 @@ namespace WebsiteTN.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(post);
+            return View(page);
         }
 
-        // GET: Admin/AdminPosts/Delete/5
+        // GET: Admin/AdminPages/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -155,30 +154,30 @@ namespace WebsiteTN.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts
-                .FirstOrDefaultAsync(m => m.PostId == id);
-            if (post == null)
+            var page = await _context.Pages
+                .FirstOrDefaultAsync(m => m.PageId == id);
+            if (page == null)
             {
                 return NotFound();
             }
 
-            return View(post);
+            return View(page);
         }
 
-        // POST: Admin/AdminPosts/Delete/5
+        // POST: Admin/AdminPages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var post = await _context.Posts.FindAsync(id);
-            _context.Posts.Remove(post);
+            var page = await _context.Pages.FindAsync(id);
+            _context.Pages.Remove(page);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PostExists(int id)
+        private bool PageExists(int id)
         {
-            return _context.Posts.Any(e => e.PostId == id);
+            return _context.Pages.Any(e => e.PageId == id);
         }
     }
 }

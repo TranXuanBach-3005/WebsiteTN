@@ -1,4 +1,4 @@
-﻿@model WebsiteTN.Models.Post
+﻿@model WebsiteTN.Models.Page
 
 @{
     ViewData["Title"] = "Edit";
@@ -9,22 +9,20 @@
     <div class="header-sub-title">
         <nav class="breadcrumb breadcrumb-dash">
             <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Trang chủ</a>
-            <span class="breadcrumb-item active">Cập nhật tin tức</span>
+            <span class="breadcrumb-item active">Cập nhật Page</span>
         </nav>
     </div>
 </div>
 
-<form asp-controller="AdminPosts" asp-action="Edit" method="post" enctype="multipart/form-data">
-    <input type="hidden" asp-for="PostId" />
-    <input type="hidden" asp-for="CreatedDate" />
-    <input type="hidden" asp-for="Thumb" />
+<form asp-controller="AdminPages" asp-action="Create" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="PageId"/>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="page-header no-gutters has-tab">
         <div class="row">
             <div class="col-md-8">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#product-edit-basic">THÔNG TIN TIN TỨC</a>
+                        <a class="nav-link active" data-toggle="tab" href="#product-edit-basic">THÔNG TIN PAGE</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#product-edit-option">THÔNG TIN SEO</a>
@@ -47,8 +45,12 @@
             <div class="card">
                 <div class="card-body">
                     <div class="form-group">
-                        <label class="font-weight-semibold" for="productName">Tiêu đề</label>
-                        <input type="text" class="form-control" asp-for="Title">
+                        <label class="font-weight-semibold" for="productName">Tên Page</label>
+                        <input type="text" class="form-control" asp-for="PageName">
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-semibold" for="ShortDesc">Ordering</label>
+                        <input type="text" class="form-control" asp-for="Ordering">
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -59,26 +61,12 @@
                             </div>
                         </div>
                         <div class="col-md-6 m-t-25 d-flex">
-                            <div class="col-md-4 form-group d-flex align-items-center">
+                            <div class="form-group d-flex align-items-center">
                                 <div class="switch m-r-10">
-                                    <input asp-for="Published" type="checkbox" checked="" />
+                                    <input asp-for="Published" type="checkbox" />
                                     <label for="Published"></label>
                                 </div>
                                 <label>Public</label>
-                            </div>
-                            <div class="col-md-4 form-group d-flex align-items-center">
-                                <div class="switch m-r-10">
-                                    <input asp-for="IsHot" type="checkbox" />
-                                    <label for="IsHot"></label>
-                                </div>
-                                <label>IsHot</label>
-                            </div>
-                            <div class="col-md-4 form-group d-flex align-items-center">
-                                <div class="switch m-r-10">
-                                    <input asp-for="IsNewfeed" type="checkbox" />
-                                    <label for="IsNewfeed"></label>
-                                </div>
-                                <label>IsNewfeed</label>
                             </div>
                         </div>
                     </div>
@@ -89,16 +77,16 @@
             <div class="card">
                 <div class="card-body">
                     <div class="form-group">
+                        <label class="font-weight-semibold" for="productSize">Title</label>
+                        <input type="text" class="form-control" asp-for="Title">
+                    </div>
+                    <div class="form-group">
                         <label class="font-weight-semibold" for="productColors">MetaDesc</label>
                         <input type="text" class="form-control" asp-for="MetaDesc">
                     </div>
                     <div class="form-group">
                         <label class="font-weight-semibold" for="productFit">MetaKey</label>
                         <input type="text" class="form-control" asp-for="MetaKey">
-                    </div>
-                    <div class="form-group">
-                        <label class="font-weight-semibold" for="productFit">Tags</label>
-                        <input type="text" class="form-control" asp-for="Tags">
                     </div>
                 </div>
             </div>
@@ -131,3 +119,4 @@
         });
     </script>
 }
+
