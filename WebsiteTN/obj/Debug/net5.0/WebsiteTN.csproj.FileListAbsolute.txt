@@ -1407,9 +1407,11 @@ D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminPosts\Delet
 D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminPosts\Details.cshtml.g.cs
 D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminPosts\Edit.cshtml.g.cs
 D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminPosts\Index.cshtml.g.cs
-D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\WebsiteTN.csproj.AssemblyReference.cache
 D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminPages\Create.cshtml.g.cs
 D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminPages\Delete.cshtml.g.cs
 D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminPages\Details.cshtml.g.cs
 D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminPages\Edit.cshtml.g.cs
 D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminPages\Index.cshtml.g.cs
+D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Areas\Admin\Views\Searchs\ListProductsSearchPartial.cshtml.g.cs
+D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\WebsiteTN.csproj.AssemblyReference.cache
+D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Views\Blogs\Details.cshtml.g.cs
