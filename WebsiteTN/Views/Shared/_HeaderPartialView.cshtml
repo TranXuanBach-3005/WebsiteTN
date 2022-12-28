@@ -68,8 +68,16 @@
                                         <i class="pe-7s-users"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingButton">
-                                        <li><a class="dropdown-item" href="my-account.html">Tài khoản của tôi</a></li>
-                                        <li><a class="dropdown-item" href="login-register.html">Đăng nhập | Đăng ký</a></li>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <li><a class="dropdown-item" href="/my-account.html">Tài khoản của tôi</a></li>
+                                        }
+                                        else
+                                        {
+
+                                            <li><a class="dropdown-item" href="/dang-ky.html">Đăng ký</a></li>
+                                            <li><a class="dropdown-item" href="/dang-nhap.html">Đăng nhập</a></li>
+                                        }
                                     </ul>
                                 </li>
                                 <li class="d-none d-md-block">
@@ -100,7 +108,7 @@
             </div>
         </div>
     </div>
-    <div class="main-header header-sticky" data-bg-color="#bac34e">
+    <div class="main-header header-sticky" style="background-color: rgb(165, 5, 5)">
         <div class="container">
             <div class="main-header_nav position-relative">
                 <div class="row align-items-center">
@@ -114,13 +122,13 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a asp-controller="Home" asp-action="About">Về chúng tôi</a>
+                                        <a href="/gioi-thieu.html">Về chúng tôi</a>
                                     </li>
                                     <li>
                                         <a asp-controller="Products" asp-action="Index">Sảm Phẩm</a>
                                     </li>
                                     <li>
-                                        <a asp-controller="Blogs" asp-action="Index">Hướng dẫn mua hàng</a>
+                                        <a href="/pages/huong-dan-mua-hang">Hướng dẫn mua hàng</a>
                                     </li>
                                     <li>
                                         <a asp-controller="Blogs" asp-action="Index">Blog</a>
@@ -170,9 +178,19 @@
                             <button class="btn btn-link dropdown-toggle ht-btn p-0" type="button" id="settingButtonTwo" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="pe-7s-users"></i>
                             </button>
+
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingButtonTwo">
-                                <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                <li><a class="dropdown-item" href="login-register.html">Login | Register</a></li>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li><a class="dropdown-item" href="/my-account.html">Tài khoản của tôi</a></li>
+                                }
+                                else
+                                {
+
+                                    <li><a class="dropdown-item" href="/dang-ky.html">Đăng ký</a></li>
+                                    <li><a class="dropdown-item" href="/dang-nhap.html">Đăng nhập</a></li>
+                                }
+
                             </ul>
                         </li>
                         <li>
@@ -186,7 +204,7 @@
                     <nav class="offcanvas-navigation">
                         <ul class="mobile-menu">
                             <li class="menu-item-has-children">
-                                <a href="#">
+                                <a href="/">
                                     <span class="mm-text">
                                         Home
                                         <i class="pe-7s-angle-down"></i>
