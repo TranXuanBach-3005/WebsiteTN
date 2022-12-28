@@ -1,10 +1,13 @@
 using AspNetCoreHero.ToastNotification;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using WebsiteTN.Models;
@@ -28,6 +31,18 @@ namespace WebsiteTN
             services.AddDbContext<DataDbContext>(options => options.UseSqlServer(stringConnectdb));
             services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddSession();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+         .AddCookie(options =>
+         {
+             options.Cookie.Name = "_authLoginCookie";
+             options.Cookie.HttpOnly = true;
+             options.LoginPath = new PathString("/dang-nhap.html");
+             options.LogoutPath = new PathString("/dang-xuat.html");
+             options.AccessDeniedPath = new PathString("/not-found.html");
+             options.ExpireTimeSpan = TimeSpan.FromDays(1);
+             options.SlidingExpiration = false;
+         });
             services.AddNotyf(config =>
             {
                 config.DurationInSeconds = 3;
@@ -52,9 +67,9 @@ namespace WebsiteTN
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

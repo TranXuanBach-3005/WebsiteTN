@@ -30,7 +30,7 @@ namespace WebsiteTN.Areas.Admin.Controllers
         {
             var listPages = _context.Pages.AsNoTracking().OrderBy(x => x.PageId);
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            var pageSize = 20;
+            var pageSize = 1;
             PagedList<Page> models = new PagedList<Page>(listPages, pageNumber, pageSize);
             ViewBag.CurrentPage = pageNumber;
             return View(models);
@@ -78,6 +78,7 @@ namespace WebsiteTN.Areas.Admin.Controllers
                 }
                 if (string.IsNullOrEmpty(page.Thumb)) page.Thumb = "default.jpg";
                 page.Alias = Utilities.SEOUrl(page.PageName);
+                page.CreatedDate = DateTime.Now;
                 _context.Add(page);
                 await _context.SaveChangesAsync();
                 _notyfService.Success("Thêm mới thành công");

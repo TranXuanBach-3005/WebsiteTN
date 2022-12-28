@@ -1415,3 +1415,8 @@ D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminPages\Index
 D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Areas\Admin\Views\Searchs\ListProductsSearchPartial.cshtml.g.cs
 D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\WebsiteTN.csproj.AssemblyReference.cache
 D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Views\Blogs\Details.cshtml.g.cs
+D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Views\Pages\Details.cshtml.g.cs
+D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Views\Home\_ListProductPartialView.cshtml.g.cs
+D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Views\Accounts\RegisterAccount.cshtml.g.cs
+D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Views\Accounts\Login.cshtml.g.cs
+D:\WebsiteTN\WebsiteTN\obj\Debug\net5.0\Razor\Views\Accounts\Dashboard.cshtml.g.cs

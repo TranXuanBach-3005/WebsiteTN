@@ -1,0 +1,39 @@
+﻿@model WebsiteTN.ModelViews.LoginVm
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="main-content">
+    <div class="login-register-area section-space-y-axis-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-lg-6">
+                    <form asp-action="Login" asp-controller="Accounts">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="login-form">
+                            <h4 class="login-title text-center">ĐĂNG NHẬP</h4>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Nhập Email</label>
+                                    <input type="email" asp-for="UserName" placeholder="Nhập Email">
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Mật khẩu</label>
+                                    <input type="password" asp-for="Password" placeholder="Nhập mật khẩu">
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="col-lg-12 pt-5">
+                                    <button class="btn btn-custom-size lg-size btn-secondary btn-primary-hover rounded-0">ĐĂNG NHẬP</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+    </div>
+</main>

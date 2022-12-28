@@ -12,6 +12,24 @@ namespace WebsiteTN.Helpper
 {
     public static class Utilities
     {
+       public static bool IsValidEmail(string email)
+        {
+            var trimmedEmail = email.Trim();
+
+            if (trimmedEmail.EndsWith("."))
+            {
+                return false; // suggested by @TK-421
+            }
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == trimmedEmail;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         public static string StripHTML(string input)
         {
             try
@@ -27,23 +45,6 @@ namespace WebsiteTN.Helpper
             }
             return null;
         }
-        public static bool IsValidEmail(string email)
-        {
-            if (email.Trim().EndsWith("."))
-            {
-                return false;
-            }
-            try
-            {
-                var addr = new MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
         public static int PAGE_SIZE = 20;
         public static void CreateIfMissing(string path)
         {

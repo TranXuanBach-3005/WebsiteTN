@@ -31,7 +31,7 @@ namespace WebsiteTN.Areas.Admin.Controllers
         {
             var listPosts = _context.Posts.AsNoTracking().OrderBy(x=>x.PostId);
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            var pageSize = 20;
+            var pageSize = 1;
             PagedList<Post> models = new PagedList<Post>(listPosts, pageNumber, pageSize);
             ViewBag.CurrentPage = pageNumber;
             return View(models);
