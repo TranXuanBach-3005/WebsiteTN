@@ -16,17 +16,23 @@
 <div class="card">
     <div class="card-body">
         <div class="row m-b-30">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="d-md-flex">
                     <div class="m-b-10 m-r-15">
-                        <select class="custom-select" id="txtCategoryId" name="txtCategoryId" style="min-width:200px;" asp-items="ViewBag.DanhMuc" >
+                        <select class="custom-select" id="txtCategoryId" name="txtCategoryId" style="min-width:200px;" asp-items="ViewBag.DanhMuc">
                             <option selected>Chọn danh mục</option>
                             <option value="0">Tất cả</option>
                         </select>
                     </div>
                 </div>
             </div>
-            <div class=" col-md-6 text-right">
+            <div class="col-md-4">
+                <div class="input-affix">
+                    <i class="prefix-icon anticon anticon-search opacity-04"></i>
+                    <input id="keyword" name="keyword" type="text" class="form-control" placeholder="Tìm kiếm sản phẩm">
+                </div>
+            </div>
+            <div class=" col-md-4 text-right">
                 <a class="btn btn-primary" asp-area="Admin" asp-controller="AdminProducts" asp-action="Create"><i class="anticon anticon-plus-circle m-r-5"></i>Thêm mới sản phẩm</a>
             </div>
         </div>
@@ -43,7 +49,7 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="records_table">
                     @if (Model != null)
                     {
                         foreach (var item in Model)
@@ -65,7 +71,7 @@
                                     else
                                     {
                                         <div class="d-flex align-items-center">
-                                            <div class="badge badge-danger badge-danger m-r-10"></div>
+                                            <div class="badge badge-danger badge-dot m-r-10"></div>
                                             <div>Out Stock</div>
                                         </div>
                                     }
@@ -82,7 +88,7 @@
             </table>
             <div aria-label="Page navigation example">
                 <ul class="pagination">
-                    <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminProducts" asp-route-CategoryId ="ViewBag.CurentCateID" asp-action="Index" />
+                    <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminProducts" asp-route-CategoryId="@ViewBag.CurrentCateID" asp-action="Index" />
                 </ul>
             </div>
         </div>
@@ -108,6 +114,23 @@
                     if (results.status == "success") {
                         window.location.href = results.redirectUrl;
                     }
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        });
+        $("#keyword").keyup(function () {
+            var strkeyword = $('#keyword').val();
+            $.ajax({
+                url: '/Admin/Searchs/FindProduct/',
+                datatype: "json",
+                type: "POST",
+                data: { keyword: strkeyword },
+                async: true,
+                success: function (results) {
+                    $("#records_table").html("");
+                    $("#records_table").html(results);
                 },
                 error: function (xhr) {
                     alert('error');

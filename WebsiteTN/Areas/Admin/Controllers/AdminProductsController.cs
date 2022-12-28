@@ -24,7 +24,7 @@ namespace WebsiteTN.Areas.Admin.Controllers
         public async Task<IActionResult> Index(int page =1, int CategoryId = 0)
         {
             var pageNumber = page;
-            var pageSize = 20;
+            var pageSize = 10;
             List<Product> listProducts = new List<Product>();
             if(CategoryId != 0)
             {
