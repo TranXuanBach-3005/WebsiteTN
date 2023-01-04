@@ -43,7 +43,7 @@
                                                     <td class="product-price"><span class="amount">@item.product.Price.Value.ToString("#,##0") VNĐ</span></td>
                                                     <td class="quantity">
                                                         <div class="cart-plus-minus">
-                                                            <input class="cart-plus-minus-box" value="1" type="text">
+                                                            <input data-id="@item.product.ProductId" data-unitprice="@item.product.Price" class="cart-plus-minus-box" value="@item.quantity" min="1" type="number">
                                                         </div>
                                                     </td>
                                                     <td class="product-subtotal"><span class="amount">@item.TotalMoney.ToString("#,##0") VNĐ</span></td>
@@ -58,7 +58,7 @@
                                     <div class="cart-page-total">
                                         <h2>Tổng tiền</h2>
                                         <ul>
-                                            <li>Thành tiền <span></span></li>
+                                            <li>Thành tiền <span>@Model.Sum(x=>x.TotalMoney).ToString("#,##0")</span></li>
                                             <li>Thanh toán<span>$118.60</span></li>
                                         </ul>
                                     </div>
@@ -75,3 +75,6 @@
         </div>
     </div>
 </main>
+@section Scripts{
+    <script src="~/clientassets/cartjs/indexCart.js"></script>
+ }

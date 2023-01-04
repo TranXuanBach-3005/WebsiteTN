@@ -59,22 +59,18 @@
                                                         <td>@item.ShipDate</td>
                                                         <td>@item.TransactStatus.Status</td>
                                                         <td>
-                                                            <a href="javascript:void(0)" class="btn btn-secondary btn-primary-hover"><span>Xem chi tiết</span></a>
+                                                            <a href="javascript:void(0)" class="vieworder" data-codeorder="@item.OrderId"><span>Xem chi tiết</span></a>
                                                         </td>
                                                     </tr>
                                                 }
-
-                                                <tr>
-                                                    <td><a class="account-order-id" href="javascript:void(0)">#5356</a></td>
-                                                    <td>Mar 27, 2019</td>
-                                                    <td>On Hold</td>
-                                                    <td>$162.00 for 2 items</td>
-                                                    <td>
-                                                        <a href="javascript:void(0)" class="btn btn-secondary btn-primary-hover"><span>View</span></a>
-                                                    </td>
-                                                </tr>
                                             </tbody>
                                         </table>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <hr />
+                                        <div id="records_table"></div>
                                     </div>
                                 }
                                 else
@@ -93,4 +89,27 @@
         </div>
     </div>
 </main>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".vieworder").click(function () {
+                var codeorder = $(this).attr("data-codeorder")
+                $.ajax({
+                    url: '/Orders/Details',
+                    dataType: "json",
+                    type: "POST",
+                    data: { orderId: codeorder },
+                    async: true,
+                    success: function (result) {
+                        $("records_table").html("");
+                        $("records_table").html(result);
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+    </script>
+}
 
