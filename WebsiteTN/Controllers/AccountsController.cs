@@ -66,13 +66,14 @@ namespace WebsiteTN.Controllers
             }
         }
         [HttpGet]
+        [Route("dashboard.html")]
         public IActionResult Dashboard()
         {
             var accountId = HttpContext.Session.GetString("CustomerId");
             if (accountId != null)
             {
                 var costomer = _context.Customers.AsNoTracking().SingleOrDefault(x => x.CustomerId == Convert.ToInt32(accountId));
-                if(costomer != null)
+                if (costomer != null)
                 {
                     var listOrder = _context.Orders.Include(x => x.TransactStatus)
                                                    .AsNoTracking()
@@ -94,7 +95,7 @@ namespace WebsiteTN.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        [Route("dang-ky.html", Name ="Register")]
+        [Route("dang-ky.html", Name = "Register")]
         public async Task<IActionResult> RegisterAccount(RegisterVm registerVm)
         {
             try
@@ -130,7 +131,7 @@ namespace WebsiteTN.Controllers
                         await HttpContext.SignInAsync(claimsPrincipal);
                         return RedirectToAction("Dashboard", "Accounts");
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         return RedirectToAction("RegisterAccount", "Accounts");
                     }
@@ -159,7 +160,7 @@ namespace WebsiteTN.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        [Route("/dang-nhap.html", Name ="Login")]
+        [Route("/dang-nhap.html", Name = "Login")]
         public async Task<IActionResult> Login(LoginVm loginVm, string returnUrl)
         {
             try
@@ -173,6 +174,7 @@ namespace WebsiteTN.Controllers
                     string password = (loginVm.Password + account.Salt.Trim()).ToMD5();
                     if (account.Password != password)
                     {
+                        _notyfService.Warning("Sai mật khẩu");
                         return View(loginVm);
                     }
                     if (account.Active == false)
@@ -193,6 +195,10 @@ namespace WebsiteTN.Controllers
                     await HttpContext.SignInAsync(claimsPrincipal);
                     if (string.IsNullOrEmpty(returnUrl))
                     {
+                        _context.Customers.Attach(account);
+                        account.LastLogin = DateTime.Now;
+                        _context.Entry(account).Property(x => x.LastLogin).IsModified = true;
+                        _context.SaveChanges();
                         return RedirectToAction("Dashboard", "Accounts");
                     }
                     else
@@ -201,11 +207,56 @@ namespace WebsiteTN.Controllers
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return RedirectToAction("RegisterAccount", "Accounts");
             }
             return View(loginVm);
+        }
+        [HttpPost]
+        public IActionResult ChangePassword(ChangePasswordViewModel viewModel)
+        {
+            try
+            {
+                var accountId = HttpContext.Session.GetString("CustomerId");
+                if (accountId == null)
+                {
+                    return RedirectToAction("Login", "Accounts");
+                }
+                if (ModelState.IsValid)
+                {
+                    var account = _context.Customers.Find(Convert.ToInt32(accountId));
+                    if (account == null)
+                    {
+                        return RedirectToAction("Login", "Accounts");
+                    }
+                    else
+                    {
+                        var pass = (viewModel.PasswordNow.Trim() + account.Salt.Trim()).ToMD5();
+                        string passwordNew = (viewModel.Password.Trim() + account.Salt.Trim()).ToMD5();
+                        account.Password = passwordNew;
+                        _context.Update(account);
+                        _context.SaveChanges();
+                        _notyfService.Success("Đổi mật khẩu thành công");
+                        return RedirectToAction("Dashboard", "Accounts");
+                    }
+                }
+            }
+            catch
+            {
+                _notyfService.Error("Đổi mật khẩu không thành công");
+                return RedirectToAction("Dashboard", "Accounts");
+            }
+            _notyfService.Error("Thay đổi mật khẩu không thành công");
+            return RedirectToAction("Dashboard", "Accounts");
+        }
+        [HttpGet]
+        [Route("dang-xuat.html", Name ="Logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync();
+            HttpContext.Session.Remove("CustomerId");
+            return RedirectToAction("Index", "Home");
         }
         public IActionResult Index()
         {

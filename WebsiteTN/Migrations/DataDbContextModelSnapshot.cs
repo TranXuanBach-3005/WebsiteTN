@@ -336,9 +336,6 @@ namespace WebsiteTN.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("Amount")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -355,6 +352,9 @@ namespace WebsiteTN.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<int?>("TotalMoney")
@@ -464,6 +464,9 @@ namespace WebsiteTN.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Views")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ViewsCount")
                         .HasColumnType("int");
 
                     b.HasKey("PostId");

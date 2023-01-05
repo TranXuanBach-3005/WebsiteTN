@@ -1,0 +1,237 @@
+﻿@model WebsiteTN.ModelViews.OrderViewModel
+@using WebsiteTN.ModelViews
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<CartItem> cartItems = ViewBag.Cart;
+}
+@section Styles{
+    <style type="text/css">
+        .nice-select .list {
+            border-radius: 0px;
+            overflow-y: auto;
+            overflow: hidden;
+            max-height: 200px;
+            overflow-y: scroll;
+        }
+
+        .nice-select .option:hover, .nice-select .option.focus, .nice-select .option.selected.focus {
+            color: red;
+            background: none;
+        }
+    </style>
+}
+<main class="main-content">
+    <div class="checkout-area section-space-y-axis-100">
+        <div class="container">
+            <form asp-controller="Checkout" asp-action="Index" method="post">
+                <input hidden asp-for="CustomerId" />
+                <div class="row">
+                    <div class="col-lg-6 col-12">
+
+                        <div class="checkbox-form">
+                            <h3>THÔNG TIN KHÁCH HÀNG</h3>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="checkout-form-list">
+                                        <label>Họ và Tên</label>
+                                        <input asp-for="FullName" placeholder="Họ và Tên" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkout-form-list">
+                                        <label>Số điện thoại <span class="required">*</span></label>
+                                        <input asp-for="Phone" placeholder="Số điện thoại" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkout-form-list">
+                                        <label>Địa chỉ nhận hàng <span class="required">*</span></label>
+                                        <input asp-for="Address" placeholder="Địa chỉ nhận hàng" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="country-select">
+                                        <label>Tỉnh / Thành</label>
+                                        <select asp-for="Province" class="myniceselect nice-select wide" asp-items="ViewBag.ListProvince">
+                                            <option value="0" disabled selected>Tỉnh/Thành</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="country-select clearfix">
+                                        <label>Quận / Huyện</label>
+                                        <select asp-for="District" class="myniceselect wide">
+                                            <option value="0" disabled selected>Quận/Huyện</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="country-select clearfix">
+                                        <label>Phường / Xã</label>
+                                        <select asp-for="District" class="myniceselect nice-select wide">
+                                            <option value="0" disabled selected>Phường/Xã</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <div class="your-order">
+                            <h3>THÔNG TIN ĐƠN HÀNG</h3>
+                            <div class="your-order-table table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="cart-product-name">SẢN PHẨM</th>
+                                            <th class="cart-product-total">THÀNH TIỀN</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (cartItems.Count() > 0)
+                                        {
+                                            foreach (var item in cartItems)
+                                            {
+                                                <tr class="cart_item">
+                                                    <td class="cart-product-name">
+                                                        @item.product.ProductName<strong class="product-quantity">
+                                                            × @item.quantity
+                                                        </strong>
+                                                    </td>
+                                                    <td class="cart-product-total"><span class="amount">@item.TotalMoney.ToString("#,##0") VNĐ</span></td>
+                                                </tr>
+                                            }
+                                        }
+
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="order-total">
+                                            <th>TỔNG ĐƠN HÀNG</th>
+                                            <td><strong><span class="amount">@cartItems.Sum(x => x.TotalMoney).ToString("#,##0") VNĐ</span></strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <h5 style="color:red">Vui lòng chọn hình thức thanh toán</h5>
+                            <div class="payment-method">
+                                <div class="payment-accordion">
+                                    <div id="accordion">
+                                        <div class="card">
+                                            <div class="card-header" id="#payment-1">
+                                                <h5 class="panel-title">
+                                                    <a href="javascript:void(0)" class="" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true">
+                                                        Thanh toán khi giao hàng (COD)
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
+                                                <div class="card-body">
+                                                    <p>
+                                                        Khách hàng sẽ thanh toán khi nhận hàng
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="#payment-2">
+                                                <h5 class="panel-title">
+                                                    <a href="javascript:void(0)" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false">
+                                                        Chuyển khoản qua ngân hàng
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
+                                                <div class="card-body">
+                                                    <p>
+                                                        Thông tin tài khoản ngân hàng
+                                                    </p>
+                                                    <p>Chủ tài khoản: Dương Phương Duy</p>
+                                                    <p>Số tài khoản: 0963102916 - Ngân hàng VietcomBank</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="#payment-3">
+                                                <h5 class="panel-title">
+                                                    <a href="javascript:void(0)" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false">
+                                                        Thanh toán qua MOMO
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
+                                                <div class="card-body">
+                                                    <p>Thông tin MOMO</p>
+                                                    <p>Chủ tài khoản: Dương Phương Duy</p>
+                                                    <p>Số điện thoại: 0963102916</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-button-payment">
+                                        <input value="XÁC NHẬN ĐẶT HÀNG" type="submit">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</main>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('select').niceSelect();
+            $(function () {
+                $("#Province").change(function () {
+                    var locationId = $('#Province').val();
+                    $.ajax({
+                        url: '/Location/ListDistrict',
+                        type: "GET",
+                        dataType: "JSON",
+                        data: { LocationId: locationId },
+                        success: function (Districts) {
+                            $("#District").empty();
+                            $("#Ward").empty();
+                            var strWard = '<option value="" disabled selected>Phường/Xã</option>';
+                            $("#Ward").append(strWard);
+                            var strDistrict = '<option value="" disabled selected>Quận/Huyện</option>';
+                            $("#District").append(strDistrict);
+                            $.each(Districts, function (i, item) {
+                                var option = '<option value="' + item.locationId + '">' + item.nameWithType + '</option>';
+                                $("#District").append(option);
+                            });
+                            $('select').niceSelect('update');
+                        }
+                    });
+                });
+            });
+            $(function () {
+                $("#District").change(function () {
+                    var locationId = $('#District').val();
+                    $.ajax({
+                        url: '/Location/ListWard',
+                        type: "GET",
+                        dataType: "JSON",
+                        data: { LocationId: locationId },
+                        success: function (ListWard) {
+                            $("#Ward").empty();
+                            var readonly = '<option value="" disabled selected>Phường/Xã</option>';
+                            $("#Ward").append(readonly);
+                            $.each(ListWard, function (i, item) {
+                                var option = '<option value="' + item.locationId + '">' + item.nameWithType + '</option>';
+                                $("#Ward").append(option);
+                            });
+                            $('select').niceSelect('update');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}

@@ -41,10 +41,17 @@ namespace WebsiteTN.Controllers
         [Route("/tin-tuc/{Alias}-{id}.html", Name ="PostDetail")]
         public IActionResult Details(int id)
         {
-            var post = _context.Posts.AsNoTracking().SingleOrDefault(x => x.PostId == id);
+            var post = _context.Posts.Find(id);
             if(post == null)
             {
                 return RedirectToAction("Index");
+            }
+            if (post != null)
+            {
+                _context.Posts.Attach(post);
+                post.Views = post.Views + 1;
+                _context.Entry(post).Property(x => x.Views).IsModified = true;
+                _context.SaveChanges();
             }
             var postFocusesDetail = _context.Posts.AsNoTracking()
                                             .Where(x => x.Published == true && x.IsHot == true).FirstOrDefault();
