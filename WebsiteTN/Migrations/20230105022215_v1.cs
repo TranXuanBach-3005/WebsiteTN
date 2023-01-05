@@ -151,7 +151,8 @@ namespace WebsiteTN.Migrations
                     IsNewfeed = table.Column<bool>(type: "bit", nullable: false),
                     MetaKey = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MetaDesc = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Views = table.Column<int>(type: "int", nullable: true)
+                    Views = table.Column<int>(type: "int", nullable: true),
+                    ViewsCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -341,7 +342,7 @@ namespace WebsiteTN.Migrations
                     OrderId = table.Column<int>(type: "int", nullable: true),
                     ProductId = table.Column<int>(type: "int", nullable: true),
                     OrderNumber = table.Column<int>(type: "int", nullable: true),
-                    Amount = table.Column<int>(type: "int", nullable: true),
+                    Quantity = table.Column<int>(type: "int", nullable: true),
                     Discount = table.Column<int>(type: "int", nullable: true),
                     TotalMoney = table.Column<int>(type: "int", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),

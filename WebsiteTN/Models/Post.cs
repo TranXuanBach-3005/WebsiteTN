@@ -24,5 +24,6 @@ namespace WebsiteTN.Models
         public string MetaKey { get; set; }
         public string MetaDesc { get; set; }
         public int? Views { get; set; }
+        public int ViewsCount { get; set; }
     }
 }

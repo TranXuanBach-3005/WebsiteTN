@@ -25,7 +25,7 @@ namespace WebsiteTN.Areas.Admin.Controllers
         {
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 20;
-            var lsCustomers = await _context.Customers.AsNoTracking().OrderByDescending(x => x.CreateDate).ToListAsync();
+            var lsCustomers = _context.Customers.AsNoTracking().OrderByDescending(x => x.CreateDate);
             PagedList<Customer> models = new PagedList<Customer>(lsCustomers, pageNumber, pageSize);
             ViewBag.CurrentPage = pageNumber;
             return View(models);
